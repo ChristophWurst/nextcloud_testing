@@ -1,0 +1,23 @@
+{
+    "name": "christophwurst/nextcloud_testing",
+    "description": "Simple and fast unit and integration testing framework for Nextcloud, based on PHPUnit",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christoph Wurst",
+            "email": "christoph@winzerhof-wurst.at"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^5.7.26"
+    },
+    "require-dev": {
+        "christophwurst/nextcloud": "^13.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ChristophWurst\\Nextcloud\\Testing\\": "/"
+        }
+    }
+}
