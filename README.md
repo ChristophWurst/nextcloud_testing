@@ -25,7 +25,7 @@ class ControllerTest extends TestCase {
 
 ## Integration Tests
 
-Include the `DatabaseTransactions` trait in your test case and any changes to the database will be rolled back after each test:
+Include the `DatabaseTransaction` trait in your test case and any changes to the database will be rolled back after each test:
 
 ```php
 <?php
