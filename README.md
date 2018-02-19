@@ -70,3 +70,32 @@ class ControllerTest extends TestCase {
 This framework targets [Sauce Labs](https://saucelabs.com/) as testing back-end that runs the test
 browser instances. Hence, it is necessary to set the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env
 variables. `SELENIUM_BROWSER` lets you choose the browser to run your tests against.
+
+## Test Users
+
+Include the `TestUser` trait in your test case to conveniently generate new test users. The trait
+will create a new user with a random UID (including collision detection).
+
+```php
+<?php
+
+use ChristophWurst\Nextcloud\Testing\TestCase;
+use ChristophWurst\Nextcloud\Testing\TestUser;
+
+class ControllerTest extends TestCase {
+
+    use TestUser;
+
+    public function testWithSelenium() {
+        …
+
+        $user = createTestUser();
+
+        …
+    }
+
+}
+```
+
+The returned user is of type `IUser`. You can read its UID with `$user->getUID()`. Note that the
+user is not removed after the test.
