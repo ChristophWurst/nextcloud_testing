@@ -29,6 +29,7 @@ namespace ChristophWurst\Nextcloud\Testing;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\WebDriverBrowserType;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
+use Guzzle\Http\Client;
 
 trait Selenium {
 
