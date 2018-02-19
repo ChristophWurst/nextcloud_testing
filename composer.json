@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": "^5.7.26"
+        "phpunit/phpunit": "^5.7.26",
+        "facebook/webdriver": "^1.5"
     },
     "require-dev": {
         "christophwurst/nextcloud": "^13.0"

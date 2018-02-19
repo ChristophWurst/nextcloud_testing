@@ -36,6 +36,9 @@ class TestCase extends PHPUnit_Framework_TestCase {
 		if (in_array(DatabaseTransaction::class, class_uses($this))) {
 			$this->startTransaction();
 		}
+		if (in_array(Selenium::class, class_uses($this))) {
+			$this->startSeleniumDriver();
+		}
 	}
 
 	protected function tearDown() {
@@ -43,6 +46,9 @@ class TestCase extends PHPUnit_Framework_TestCase {
 
 		if (in_array(DatabaseTransaction::class, class_uses($this))) {
 			$this->rollbackTransation();
+		}
+		if (in_array(Selenium::class, class_uses($this))) {
+			$this->stopSeleniumDriver();
 		}
 	}
 
