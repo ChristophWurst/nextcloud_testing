@@ -88,7 +88,7 @@ trait Selenium {
 	 */
 	private function reportTestStatusToSauce($sessionId, $failed) {
 		$httpClient = new Client();
-		$httpClient->put("https://saucelabs.com/rest/v1/nextcloud-totp/jobs/$sessionId", [
+		$httpClient->put('https://saucelabs.com/rest/v1/' . getenv('SAUCE_USERNAME') . '/jobs/$sessionId', [
 			'auth' => [
 				getenv('SAUCE_USERNAME'),
 				getenv('SAUCE_ACCESS_KEY'),
