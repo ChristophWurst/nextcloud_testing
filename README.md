@@ -41,3 +41,32 @@ class ControllerTest extends TestCase {
 
 }
 ```
+
+## Selenium Tests
+
+Include the `Selenium` trait in your test case and access the Webdriver instance via `$this->webDriver`:
+
+```php
+<?php
+
+use ChristophWurst\Nextcloud\Testing\Selenium;
+use ChristophWurst\Nextcloud\Testing\TestCase;
+
+class ControllerTest extends TestCase {
+
+    use Selenium;
+
+    public function testWithSelenium() {
+        …
+
+        $this->webDriver->get('http://localhost:8080/index.php/login');
+
+        …
+    }
+
+}
+```
+
+This framework targets [Sauce Labs](https://saucelabs.com/) as testing back-end that runs the test
+browser instances. Hence, it is necessary to set the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env
+variables. `SELENIUM_BROWSER` lets you choose the browser to run your tests against.
