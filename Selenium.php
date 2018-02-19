@@ -70,7 +70,7 @@ trait Selenium {
 		}
 	}
 
-	protected function stopSeleniumDriver() {
+	protected function stopSeleniumDriver($failed) {
 		$sessionId = $this->webDriver->getSessionID();
 
 		$this->webDriver->quit();

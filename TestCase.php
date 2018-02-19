@@ -48,7 +48,7 @@ class TestCase extends PHPUnit_Framework_TestCase {
 			$this->rollbackTransation();
 		}
 		if (in_array(Selenium::class, class_uses($this))) {
-			$this->stopSeleniumDriver();
+			$this->stopSeleniumDriver(parent::hasFailed());
 		}
 	}
 
