@@ -29,7 +29,7 @@ namespace ChristophWurst\Nextcloud\Testing;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\WebDriverBrowserType;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
-use Guzzle\Http\Client;
+use OC;
 
 trait Selenium {
 
@@ -87,8 +87,8 @@ trait Selenium {
 	 * @param bool $failed
 	 */
 	private function reportTestStatusToSauce($sessionId, $failed) {
-		$httpClient = new Client();
-		$httpClient->put('https://saucelabs.com/rest/v1/' . getenv('SAUCE_USERNAME') . '/jobs/$sessionId', [
+		$httpClient = OC::$server->getHTTPClientService()->newClient();
+		$httpClient->put('https://saucelabs.com/rest/v1/' . getenv('SAUCE_USERNAME') . "/jobs/$sessionId", [
 			'auth' => [
 				getenv('SAUCE_USERNAME'),
 				getenv('SAUCE_ACCESS_KEY'),
@@ -104,3 +104,4 @@ trait Selenium {
 	}
 
 }
+
