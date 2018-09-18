@@ -26,9 +26,9 @@
 
 namespace ChristophWurst\Nextcloud\Testing;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase as Base;
 
-abstract class TestCase extends PHPUnit_Framework_TestCase {
+abstract class TestCase extends Base {
 
 	protected function setUp() {
 		parent::setUp();
