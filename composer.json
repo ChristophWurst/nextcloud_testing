@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "phpunit/phpunit": "^6.5",
+        "phpunit/phpunit": "^7.5",
         "facebook/webdriver": "^1.6"
     },
     "require-dev": {
-        "christophwurst/nextcloud": "^14.0"
+        "christophwurst/nextcloud": "^15.0"
     },
     "autoload": {
         "psr-4": {
