@@ -45,6 +45,7 @@ trait Selenium {
 			$capabilities['tunnel-identifier'] = getenv('TRAVIS_JOB_NUMBER');
 			$capabilities['build'] = getenv('TRAVIS_BUILD_NUMBER');
 			$capabilities['name'] = $this->getTestName();
+			$capabilities['extendedDebugging'] = true;
 			$user = getenv('SAUCE_USERNAME');
 			$accessKey = getenv('SAUCE_ACCESS_KEY');
 			$this->webDriver = RemoteWebDriver::create("http://$user:$accessKey@ondemand.saucelabs.com/wd/hub", $capabilities);
