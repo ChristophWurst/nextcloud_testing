@@ -89,7 +89,7 @@ class ControllerTest extends TestCase {
     public function testWithSelenium() {
         …
 
-        $user = createTestUser();
+        $user = $this->createTestUser();
 
         …
     }
