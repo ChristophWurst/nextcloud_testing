@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * The MIT License
  *
  * Copyright 2018 Christoph Wurst <christoph@winzerhof-wurst.at>.
@@ -27,10 +27,31 @@
 namespace ChristophWurst\Nextcloud\Testing;
 
 use PHPUnit\Framework\TestCase as Base;
+use ReflectionClass;
+use function in_array;
 
-abstract class TestCase extends Base {
+abstract class TestCase extends Base
+{
 
-	protected function setUp() {
+	protected function createServiceMock(string $class, array $custom = []): ServiceMockObject
+	{
+		$reflectedClass = new ReflectionClass($class);
+		$indexedArgs = [];
+		$orderedArgs = [];
+		foreach ($reflectedClass->getConstructor()->getParameters() as $parameter) {
+			if (in_array($parameter->getName(), $custom, true)) {
+				$indexedArgs[$parameter->getName()] = $orderedArgs[] = $custom[$parameter->getName()];
+			} else {
+				$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getClass()->getName());
+			}
+		}
+		$service = new $class(...$orderedArgs);
+
+		return new ServiceMockObject($class, $indexedArgs, $service);
+	}
+
+	protected function setUp()
+	{
 		parent::setUp();
 
 		if (in_array(DatabaseTransaction::class, class_uses($this))) {
@@ -41,7 +62,8 @@ abstract class TestCase extends Base {
 		}
 	}
 
-	protected function tearDown() {
+	protected function tearDown()
+	{
 		parent::tearDown();
 
 		if (in_array(DatabaseTransaction::class, class_uses($this))) {
