@@ -26,6 +26,7 @@
 
 namespace ChristophWurst\Nextcloud\Testing;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase as Base;
 use ReflectionClass;
 use function in_array;
@@ -39,10 +40,12 @@ abstract class TestCase extends Base
 		$indexedArgs = [];
 		$orderedArgs = [];
 		foreach ($reflectedClass->getConstructor()->getParameters() as $parameter) {
-			if (in_array($parameter->getName(), $custom, true)) {
+			if (isset($custom[$parameter->getName()])) {
 				$indexedArgs[$parameter->getName()] = $orderedArgs[] = $custom[$parameter->getName()];
-			} else {
+			} else if ($parameter->getClass() !== null) {
 				$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getClass()->getName());
+			} else {
+				throw new InvalidArgumentException("Can not defer mock for constructor parameter " . $parameter->getName() . " of class $class");
 			}
 		}
 		$service = new $class(...$orderedArgs);
