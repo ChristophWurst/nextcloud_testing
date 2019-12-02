@@ -53,7 +53,7 @@ abstract class TestCase extends Base
 		return new ServiceMockObject($class, $indexedArgs, $service);
 	}
 
-	protected function setUp()
+	protected function setUp(): void
 	{
 		parent::setUp();
 
@@ -65,7 +65,7 @@ abstract class TestCase extends Base
 		}
 	}
 
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		parent::tearDown();
 
