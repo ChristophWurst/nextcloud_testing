@@ -10,8 +10,9 @@
         }
     ],
     "require": {
+        "php": "^7.3|^8.0",
         "phpunit/phpunit": "^9.0",
-        "php-webdriver/webdriver": "^1.7"
+        "php-webdriver/webdriver": "^1.9"
     },
     "require-dev": {
         "christophwurst/nextcloud": "^17.0"

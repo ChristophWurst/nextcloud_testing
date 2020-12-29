@@ -30,6 +30,8 @@ use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\WebDriverBrowserType;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
 use OC;
+use RuntimeException;
+use function getenv;
 
 trait Selenium {
 
@@ -42,12 +44,20 @@ trait Selenium {
 		];
 
 		if ($this->isRunningOnCI()) {
-			$capabilities['tunnel-identifier'] = getenv('TRAVIS_JOB_NUMBER');
-			$capabilities['build'] = getenv('TRAVIS_BUILD_NUMBER');
+			// Ref https://docs.github.com/en/free-pro-team@latest/actions/reference/environment-variables
+			if (($runId = getenv('GITHUB_RUN_ID')) !== false) {
+				$capabilities['build'] = $runId;
+			}
+			if (($tunnelId = getenv('SAUCE_TUNNEL_ID')) !== false) {
+				$capabilities['tunnel-identifier'] = $tunnelId;
+			}
+
 			$capabilities['name'] = $this->getTestName();
 			$capabilities['extendedDebugging'] = true;
-			$user = getenv('SAUCE_USERNAME');
-			$accessKey = getenv('SAUCE_ACCESS_KEY');
+			if (($user = getenv('SAUCE_USERNAME')) === false || ($accessKey = getenv('SAUCE_ACCESS_KEY')) === false) {
+				throw new RuntimeException("SAUCE credentials are missing");
+			}
+
 			$this->webDriver = RemoteWebDriver::create("http://$user:$accessKey@ondemand.saucelabs.com/wd/hub", $capabilities);
 		} else {
 			$user = getenv('SAUCE_USERNAME');
@@ -65,11 +75,8 @@ trait Selenium {
 	}
 
 	private function getTestName() {
-		if ($this->isRunningOnCI()) {
-			return 'PR' . getenv('TRAVIS_PULL_REQUEST') . ', Build ' . getenv('TRAVIS_BUILD_NUMBER') . ', Test ' . self::class . '::' . $this->getName();
-		} else {
-			return 'Test ' . self::class . '::' . $this->getName();
-		}
+		/** @var \PHPUnit\Framework\TestCase $this */
+		return 'Test ' . self::class . '::' . $this->getName();
 	}
 
 	protected function stopSeleniumDriver($failed) {
@@ -101,7 +108,7 @@ trait Selenium {
 	}
 
 	private function isRunningOnCI() {
-		return getenv('TRAVIS') !== false;
+		return getenv('CI') !== false;
 	}
 
 }
