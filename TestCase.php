@@ -38,11 +38,11 @@ abstract class TestCase extends Base
 	{
 		$reflectedClass = new ReflectionClass($class);
 		$constructor = $reflectedClass->getConstructor();
+		$indexedArgs = [];
 
 		if ($constructor === null) {
 			$service = new $class;
 		} else {
-			$indexedArgs = [];
 			$orderedArgs = [];
 			foreach ($constructor->getParameters() as $parameter) {
 				if (isset($custom[$parameter->getName()])) {
