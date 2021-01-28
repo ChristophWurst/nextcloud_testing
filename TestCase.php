@@ -37,18 +37,24 @@ abstract class TestCase extends Base
 	protected function createServiceMock(string $class, array $custom = []): ServiceMockObject
 	{
 		$reflectedClass = new ReflectionClass($class);
-		$indexedArgs = [];
-		$orderedArgs = [];
-		foreach ($reflectedClass->getConstructor()->getParameters() as $parameter) {
-			if (isset($custom[$parameter->getName()])) {
-				$indexedArgs[$parameter->getName()] = $orderedArgs[] = $custom[$parameter->getName()];
-			} else if ($parameter->getClass() !== null) {
-				$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getClass()->getName());
-			} else {
-				throw new InvalidArgumentException("Can not defer mock for constructor parameter " . $parameter->getName() . " of class $class");
+		$constructor = $reflectedClass->getConstructor();
+
+		if ($constructor === null) {
+			$service = new $class;
+		} else {
+			$indexedArgs = [];
+			$orderedArgs = [];
+			foreach ($constructor->getParameters() as $parameter) {
+				if (isset($custom[$parameter->getName()])) {
+					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $custom[$parameter->getName()];
+				} else if ($parameter->getClass() !== null) {
+					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getClass()->getName());
+				} else {
+					throw new InvalidArgumentException("Can not defer mock for constructor parameter " . $parameter->getName() . " of class $class");
+				}
 			}
+			$service = new $class(...$orderedArgs);
 		}
-		$service = new $class(...$orderedArgs);
 
 		return new ServiceMockObject($class, $indexedArgs, $service);
 	}
