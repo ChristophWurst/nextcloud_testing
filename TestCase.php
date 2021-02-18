@@ -47,8 +47,8 @@ abstract class TestCase extends Base
 			foreach ($constructor->getParameters() as $parameter) {
 				if (isset($custom[$parameter->getName()])) {
 					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $custom[$parameter->getName()];
-				} else if ($parameter->getClass() !== null) {
-					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getClass()->getName());
+				} else if ($parameter->getType() !== null) {
+					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getType()->getName());
 				} else {
 					throw new InvalidArgumentException("Can not defer mock for constructor parameter " . $parameter->getName() . " of class $class");
 				}
