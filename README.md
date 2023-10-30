@@ -1,6 +1,6 @@
 # Nextcloud Testing
 
-Simple and fast unit and integration testing framework for Nextcloud, based on PHPUnit
+Simple and fast unit and integration testing framework for Nextcloud 17+, based on PHPUnit
 
 Features
 * Minimal setUp/tearDown overhead for unit tests

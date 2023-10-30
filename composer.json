@@ -14,9 +14,6 @@
         "phpunit/phpunit": "^8.0|^9.0",
         "php-webdriver/webdriver": "^1.9"
     },
-    "require-dev": {
-        "christophwurst/nextcloud": "^17.0"
-    },
     "autoload": {
         "psr-4": {
             "ChristophWurst\\Nextcloud\\Testing\\": "/"
