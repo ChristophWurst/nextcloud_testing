@@ -31,6 +31,7 @@ use Facebook\WebDriver\Remote\WebDriverBrowserType;
 use Facebook\WebDriver\Remote\WebDriverCapabilityType;
 use OCP\Http\Client\IClientService;
 use RuntimeException;
+use function get_class;
 use function getenv;
 
 trait Selenium {
@@ -52,7 +53,7 @@ trait Selenium {
 				$capabilities['tunnel-identifier'] = $tunnelId;
 			}
 
-			$capabilities['name'] = $this->getTestName();
+			$capabilities['name'] = get_class($this);
 			$capabilities['extendedDebugging'] = true;
 			if (($user = getenv('SAUCE_USERNAME')) === false || ($accessKey = getenv('SAUCE_ACCESS_KEY')) === false) {
 				throw new RuntimeException("SAUCE credentials are missing");
