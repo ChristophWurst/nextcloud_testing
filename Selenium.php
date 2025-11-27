@@ -80,30 +80,26 @@ trait Selenium {
 		return 'Test ' . self::class . '::' . $this->getName();
 	}
 
-	protected function stopSeleniumDriver($failed) {
+	protected function stopSeleniumDriver() {
 		$sessionId = $this->webDriver->getSessionID();
 
 		$this->webDriver->quit();
 		$this->webDriver = null;
 
 		if ($this->isRunningOnCI()) {
-			$this->reportTestStatusToSauce($sessionId, $failed);
+			$this->reportTestStatusToSauce($sessionId);
 		}
 	}
 
 	/**
 	 * @param string $sessionId sauce labs job id
-	 * @param bool $failed
 	 */
-	private function reportTestStatusToSauce($sessionId, $failed) {
+	private function reportTestStatusToSauce($sessionId) {
 		$httpClient = \OCP\Server::get(IClientService::class)->newClient();
 		$httpClient->put('https://saucelabs.com/rest/v1/' . getenv('SAUCE_USERNAME') . "/jobs/$sessionId", [
 			'auth' => [
 				getenv('SAUCE_USERNAME'),
 				getenv('SAUCE_ACCESS_KEY'),
-			],
-			'json' => [
-				'passed' => !$failed,
 			],
 		]);
 	}

@@ -79,7 +79,7 @@ abstract class TestCase extends Base
 			$this->rollbackTransation();
 		}
 		if (in_array(Selenium::class, class_uses($this))) {
-			$this->stopSeleniumDriver(parent::hasFailed());
+			$this->stopSeleniumDriver();
 		}
 	}
 
