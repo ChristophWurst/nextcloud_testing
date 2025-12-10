@@ -34,6 +34,14 @@ use function in_array;
 abstract class TestCase extends Base
 {
 
+	/**
+	 * @template T
+	 * @param class-string<T> $class
+	 * @param array $custom
+	 * @return ServiceMockObject<T>
+	 * @throws \PHPUnit\Framework\MockObject\Exception
+	 * @throws \ReflectionException
+	 */
 	protected function createServiceMock(string $class, array $custom = []): ServiceMockObject
 	{
 		$reflectedClass = new ReflectionClass($class);

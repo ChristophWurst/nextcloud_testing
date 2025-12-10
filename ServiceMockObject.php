@@ -29,18 +29,25 @@ namespace ChristophWurst\Nextcloud\Testing;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 
+/**
+ * @template T
+ */
 class ServiceMockObject
 {
 
-	/** @var string */
-	private $class;
+	/** @var class-string<T> */
+	private string $class;
 
 	/** @var array */
-	private $parameters;
+	private array $parameters;
 
-	/** @var object */
-	private $service;
+	/** @var T */
+	private object $service;
 
+	/**
+	 * @param class-string<T> $class
+	 * @param T $service
+	 */
 	public function __construct(string $class,
 								array $parameters,
 								$service)
@@ -51,7 +58,7 @@ class ServiceMockObject
 	}
 
 	/**
-	 * @return object
+	 * @return T
 	 */
 	public function getService()
 	{
