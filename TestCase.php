@@ -53,7 +53,7 @@ abstract class TestCase extends Base
 		} else {
 			$orderedArgs = [];
 			foreach ($constructor->getParameters() as $parameter) {
-				if (isset($custom[$parameter->getName()])) {
+				if (array_key_exists($parameter->getName(), $custom)) {
 					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $custom[$parameter->getName()];
 				} else if ($parameter->getType() !== null) {
 					$indexedArgs[$parameter->getName()] = $orderedArgs[] = $this->createMock($parameter->getType()->getName());
