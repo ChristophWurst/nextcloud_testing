@@ -27,9 +27,9 @@
 namespace ChristophWurst\Nextcloud\Testing;
 
 use Exception;
-use OC;
 use OCP\IUser;
 use OCP\IUserManager;
+use OCP\Server;
 
 trait TestUser {
 
@@ -41,7 +41,7 @@ trait TestUser {
 	 */
 	private function getUserManager() {
 		if (is_null($this->userManager)) {
-			$this->userManager = OC::$server->getUserManager();
+			$this->userManager = Server::get(IUserManager::class);
 		}
 		return $this->userManager;
 	}
