@@ -26,21 +26,21 @@
 
 namespace ChristophWurst\Nextcloud\Testing;
 
-use OC;
 use OCP\IDBConnection;
+use OCP\Server;
 
 trait DatabaseTransaction {
 
 	public function startTransaction() {
 		/* @var $db IDBConnection */
-		$db = OC::$server->getDatabaseConnection();
+		$db = Server::get(IDBConnection::class);
 
 		$db->beginTransaction();
 	}
 
 	public function rollbackTransation() {
 		/* @var $db IDBConnection */
-		$db = OC::$server->getDatabaseConnection();
+		$db = Server::get(IDBConnection::class);
 
 		$db->rollBack();
 	}
